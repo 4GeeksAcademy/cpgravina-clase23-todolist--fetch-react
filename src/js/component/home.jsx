@@ -109,7 +109,30 @@ const Home = () => {
         getToDoList();
       })
       .catch((error) => {
-        console.log("The todo list has not been found", error);
+        console.log("Unable to delete the task", error);
+      });
+  };
+
+  const deleteUser = () => {
+    const protocol = "https";
+    const baseUrl = "playground.4geeks.com/todo";
+    const path = "/users/cpgravina";
+    const fullUrl = `${protocol}://${baseUrl}${path}`;
+    fetch(fullUrl, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          setToDoList([]);
+        } else {
+          console.log("The user could not be deleted");
+        }
+      })
+      .catch((error) => {
+        console.log("An error occurred while deleting the user", error);
       });
   };
 
@@ -149,6 +172,12 @@ const Home = () => {
             ? toDoList.length + " item(s) left"
             : "Please add a new task"}
         </p>
+        <button
+          className="btn btn-light btn-lg fs-2 mt-3"
+          onClick={deleteUser}
+        >
+          Delete all tasks
+        </button>
       </div>
     </div>
   );
